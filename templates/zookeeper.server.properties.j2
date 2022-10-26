@@ -43,10 +43,7 @@ advertised.listeners={{ kafka_advertised_listeners }}
 {% endif %}
 
 # Maps listener names to security protocols, the default is for them to be the same. See the config documentation for more details
-#listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
-{% if kafka_listener_security_protocol_map is defined %}
-advertised.listeners={{ kafka_listener_security_protocol_map }}
-{% endif %}
+listener.security.protocol.map=PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL
 
 # The number of threads that the server uses for receiving requests from the network and sending responses to the network
 num.network.threads={{ kafka_num_network_threads }}

@@ -89,7 +89,6 @@
     mode: 0644
   become: true
 
-
 - name: Copy log4j config
   ansible.builtin.template:
     src: log4j.properties.j2
@@ -98,7 +97,6 @@
     group: "{{ kafka_group }}"
   notify:
     - Restart kafka
-
 
 - name: Start kafka systemd service
   systemd:
