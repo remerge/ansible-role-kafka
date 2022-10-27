@@ -1,9 +1,14 @@
-# ansible-bigtop-kafka
+# Ansible Role for Kafka
 
-an ansible role to install and configure kafka-server on rhel/centos 7
+Install and configure Kafka with Ansible
 
-## sample playbook
-#### zookeeper mode
+The [Contributing Guide](CONTRIBUTING.md) explains how to work with and
+contribute to this repository.
+
+## Example Playbook
+
+### Zookeeper Mode
+
 ```yml
 - hosts: all
   remote_user: vagrant
@@ -23,7 +28,8 @@ an ansible role to install and configure kafka-server on rhel/centos 7
         {{- ips -}}"
 ```
 
-#### kraft mode
+### Kraft Mode
+
 ```yml
 - hosts: all
   remote_user: vagrant

@@ -1,3 +1,4 @@
+---
 - name: Download kafka version {{ kafka_version }}
   ansible.builtin.get_url:
     url: "{{ kafka_url }}"
@@ -78,8 +79,7 @@
   ansible.builtin.shell: /usr/bin/kafka/kafka-storage.sh format -t {{ kafka_cluster_id }} -c {{ kafka_config_dir }}/server.properties
   args:
     creates: "{{ kafka_log_dirs }}/meta.properties"
-  when:
-    kafka_mode == "kraft"
+  when: kafka_mode == "kraft"
 
 - name: Copy over systemd service file for kafka
   ansible.builtin.template:
