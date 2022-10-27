@@ -16,7 +16,7 @@
   ansible.builtin.user:
     name: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    create_home: no
+    create_home: false
     system: true
     state: present
 
