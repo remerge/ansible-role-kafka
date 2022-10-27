@@ -6,9 +6,9 @@ Requires=network.target
 [Service]
 User={{ kafka_user }}
 Group={{ kafka_group }}
-EnvironmentFile={{ kafka_config_dir }}/kafka.env
-ExecStart=/bin/kafka/kafka-server-start.sh {{ kafka_config_dir }}/server.properties
-ExecStop=/bin/kafka/kafka-server-stop.sh
+EnvironmentFile=/opt/kafka/config/kafka.env
+ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+ExecStop=/opt/kafka/bin/kafka-server-stop.sh
 Restart=on-failure
 SuccessExitStatus=143
 

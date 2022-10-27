@@ -1,0 +1,54 @@
+# {{ ansible_managed }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_process.roles
+process.roles={{ kafka_process_role }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_node.id
+node.id={{ kafka_listener_address | ipaddr('int') }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_broker.id
+broker.id={{ kafka_listener_address | ipaddr('int') }}
+
+{% if kafka_controller_quorum_voters is defined %}
+# https://kafka.apache.org/documentation/#brokerconfigs_controller.quorum.voters
+controller.quorum.voters=
+{%- set comma = joiner(',') -%}
+{%- for voter in kafka_controller_quorum_voters -%}
+{{- comma() }}{{ voter | ipaddr('int') }}@{{ voter }}:9093
+{%- endif -%}
+{% endif %}
+
+# Listener Settings
+
+# https://kafka.apache.org/documentation/#brokerconfigs_listeners
+listeners=PLAINTEXT://{{ kafka_listener_address }}:9092,CONTROLLER://{{ kafka_listener_address }}:9093
+
+# https://kafka.apache.org/documentation/#brokerconfigs_controller.listener.names
+controller.listener.names=CONTROLLER
+
+# https://kafka.apache.org/documentation/#brokerconfigs_listener.security.protocol.map
+listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+
+# https://kafka.apache.org/documentation/#brokerconfigs_num.network.threads
+num.network.threads={{ kafka_num_network_threads }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_num.io.threads
+num.io.threads={{ kafka_num_io_threads }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.send.buffer.bytes
+socket.send.buffer.bytes={{ kafka_socket_send_buffer_bytes }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.receive.buffer.bytes
+socket.receive.buffer.bytes={{ kafka_socket_receive_buffer_bytes }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.request.max.bytes
+socket.request.max.bytes={{ kafka_socket_request_max_bytes }}
+
+# Log Storage
+
+# https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
+log.dirs=
+{%- for log_dir in kafka_log_dirs -%}
+{%- set comma = joiner(',') -%}
+{{ comma() }}{{ log_dir }}
+{%- endif -%}

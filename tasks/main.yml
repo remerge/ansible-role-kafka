@@ -4,104 +4,111 @@
     url: "{{ kafka_url }}"
     dest: "/tmp/{{ kafka_archive }}.tar.gz"
     checksum: "{{ kafka_checksum }}"
-    mode: "0644"
+    mode: 0644
+
+- name: Create kafka group
+  ansible.builtin.group:
+    name: "{{ kafka_group }}"
+    system: true
+    state: present
 
 - name: Create kafka user
-  user:
-    name: "kafka"
+  ansible.builtin.user:
+    name: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    create_home: no
     system: true
-
-- name: Create kafka deploy directory
-  ansible.builtin.file:
-    path: "{{ kafka_deploy_directory }}"
-    state: directory
-    mode: "0750"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-  become: true
-
-- name: Create config directory
-  ansible.builtin.file:
-    path: "{{ kafka_config_dir }}"
-    state: directory
-    mode: "0750"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
+    state: present
 
 - name: Create log directory
   become: true
   ansible.builtin.file:
     path: "{{ kafka_log_dirs }}"
-    mode: "0750"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
     state: directory
-
-- name: Un-tar kafka download
-  ansible.builtin.unarchive:
-    src: "/tmp/{{ kafka_archive }}.tar.gz"
-    dest: "{{ kafka_deploy_directory }}/"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
+    mode: 0750
+
+- name: Unarchive kafka download
+  ansible.builtin.unarchive:
     copy: false
-    creates: "{{ kafka_deploy_directory }}/{{ kafka_archive }}"
-  become: true
+    src: "/tmp/{{ kafka_archive }}.tar.gz"
+    dest: "/opt/"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    creates: "/opt/{{ kafka_archive }}"
 
 - name: Create kafka symlink
   ansible.builtin.file:
-    src: "{{ kafka_deploy_directory }}/{{ kafka_archive }}/bin/"
-    dest: /usr/bin/kafka
+    src: "/opt/{{ kafka_archive }}"
+    dest: "/opt/kafka"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     state: link
 
-- name: Configure kafka server.properties
+- name: Set kafka user home
+  ansible.builtin.user:
+    name: "{{ kafka_user }}"
+    home: "/opt/kafka"
+    state: present
+
+- name: Copy kafka server.properties
   ansible.builtin.template:
-    src: "{{ kafka_mode }}.server.properties.j2"
-    dest: "{{ kafka_config_dir }}/server.properties"
+    src: "server.properties.j2"
+    dest: "/opt/kafka/config/server.properties"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: "0644"
-  notify:
-    - Restart kafka
-
-- name: Copy kafka envfile
-  ansible.builtin.template:
-    src: kafka.env.j2
-    dest: "{{ kafka_config_dir }}/kafka.env"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-    mode: "0644"
-  notify:
-    - Restart kafka
-
-- name: Format Log Directories
-  ansible.builtin.shell: /usr/bin/kafka/kafka-storage.sh format -t {{ kafka_cluster_id }} -c {{ kafka_config_dir }}/server.properties
-  args:
-    creates: "{{ kafka_log_dirs }}/meta.properties"
-  when: kafka_mode == "kraft"
-
-- name: Copy over systemd service file for kafka
-  ansible.builtin.template:
-    src: service.j2
-    dest: /lib/systemd/system/kafka.service
-    owner: root
     mode: 0644
+  notify:
+    - Restart kafka
+
+- name: Copy kafka environment
+  ansible.builtin.template:
+    src: "kafka.env.j2"
+    dest: "/opt/kafka/config/kafka.env"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+  notify:
+    - Restart kafka
+
+- name: Format log directories
+  ansible.builtin.command:
+    argv:
+      - "/opt/kafka/bin/kafka-storage.sh"
+      - "format"
+      - "-t"
+      - "{{ kafka_cluster_id }}"
+      - "-c"
+      - "/opt/kafka/config/server.properties"
+    creates: "{{ kafka_log_dirs }}/meta.properties"
   become: true
+  become_user: kafka
+
+- name: Copy kafka systemd service
+  ansible.builtin.template:
+    src: "systemd.service.j2"
+    dest: "/usr/lib/systemd/system/kafka.service"
+    owner: "root"
+    group: "root"
+    mode: 0644
 
 - name: Copy log4j config
   ansible.builtin.template:
-    src: log4j.properties.j2
-    dest: "{{ kafka_config_dir }}/log4j.properties"
+    src: "log4j.properties.j2"
+    dest: "/opt/kafka/config/log4j.properties"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
+    mode: 0644
   notify:
     - Restart kafka
 
-- name: Start kafka systemd service
-  systemd:
+- name: Flush handlers to prevent restart after start
+  ansible.builtin.meta: flush_handlers
+
+- name: Start kafka
+  ansible.builtin.systemd:
     name: kafka
     state: started
     daemon_reload: true
     enabled: true
-  become: true
