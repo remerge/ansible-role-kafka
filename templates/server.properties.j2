@@ -1,13 +1,16 @@
 # {{ ansible_managed }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_process.roles
-process.roles={{ kafka_process_role }}
+process.roles={{ kafka_process_roles | join(',') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_node.id
 node.id={{ kafka_listener_address | ipaddr('int') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_broker.id
 broker.id={{ kafka_listener_address | ipaddr('int') }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
+log.dirs={{ kafka_log_dirs | join(',') }}
 
 {% if kafka_controller_quorum_voters is defined %}
 # https://kafka.apache.org/documentation/#brokerconfigs_controller.quorum.voters
@@ -43,12 +46,3 @@ socket.receive.buffer.bytes={{ kafka_socket_receive_buffer_bytes }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_socket.request.max.bytes
 socket.request.max.bytes={{ kafka_socket_request_max_bytes }}
-
-# Log Storage
-
-# https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
-log.dirs=
-{%- for log_dir in kafka_log_dirs -%}
-{%- set comma = joiner(',') -%}
-{{ comma() }}{{ log_dir }}
-{%- endif -%}
