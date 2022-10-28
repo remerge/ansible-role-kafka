@@ -18,13 +18,23 @@ controller.quorum.voters=
 {%- set comma = joiner(',') -%}
 {%- for voter in kafka_controller_quorum_voters -%}
 {{- comma() }}{{ voter | ipaddr('int') }}@{{ voter }}:9093
-{%- endif -%}
+{%- endfor -%}
 {% endif %}
 
 # Listener Settings
 
 # https://kafka.apache.org/documentation/#brokerconfigs_listeners
-listeners=PLAINTEXT://{{ kafka_listener_address }}:9092,CONTROLLER://{{ kafka_listener_address }}:9093
+listeners=
+{%- set comma = joiner(',') -%}
+{%- for role in kafka_process_roles -%}
+{% if role == "controller" %}
+{%- set listener = "CONTROLLER://" + kafka_listener_address + ":9093" -%}
+{% else %}
+{%- set listener = "PLAINTEXT://" + kafka_listener_address + ":9092" -%}
+{% endif %}
+{{- comma() }}{{ listener }}
+{%- endfor %}
+
 
 # https://kafka.apache.org/documentation/#brokerconfigs_controller.listener.names
 controller.listener.names=CONTROLLER
