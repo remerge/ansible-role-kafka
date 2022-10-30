@@ -83,6 +83,7 @@
       - "-c"
       - "/opt/kafka/config/server.properties"
       - "--ignore-formatted"
+    creates: "{{ kafka_log_dirs[0] }}/meta.properties"
   become: true
   become_user: kafka
 
