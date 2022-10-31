@@ -3,19 +3,5 @@
 log4j.rootLogger=INFO, stdout
 
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender
-log4j.appender.stdout.Threshold=INFO
-log4j.appender.stdout.Target=System.out
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=[%c] %m%n
-
-log4j.logger.kafka.controller=INFO, controllerAppender
-log4j.additivity.kafka.controller=false
-
-log4j.logger.kafka.network.RequestChannel$=WARN, requestAppender
-log4j.additivity.kafka.network.RequestChannel$=false
-
-log4j.logger.kafka.request.logger=WARN, requestAppender
-log4j.additivity.kafka.request.logger=false
-
-log4j.logger.state.change.logger=INFO, stateChangeAppender
-log4j.additivity.state.change.logger=false
