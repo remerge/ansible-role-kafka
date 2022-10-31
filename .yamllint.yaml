@@ -3,6 +3,8 @@ extends: default
 
 ignore: |
   .copier-answers.yml
+  .cache/
+  .tox/
 
 rules:
   comments:
