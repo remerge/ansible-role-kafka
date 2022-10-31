@@ -35,24 +35,15 @@ listeners=
 {{- comma() }}{{ listener }}
 {%- endfor %}
 
-
 # https://kafka.apache.org/documentation/#brokerconfigs_controller.listener.names
 controller.listener.names=CONTROLLER
 
 # https://kafka.apache.org/documentation/#brokerconfigs_listener.security.protocol.map
 listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
 
-# https://kafka.apache.org/documentation/#brokerconfigs_num.network.threads
-num.network.threads={{ kafka_num_network_threads }}
-
-# https://kafka.apache.org/documentation/#brokerconfigs_num.io.threads
-num.io.threads={{ kafka_num_io_threads }}
-
-# https://kafka.apache.org/documentation/#brokerconfigs_socket.send.buffer.bytes
-socket.send.buffer.bytes={{ kafka_socket_send_buffer_bytes }}
-
-# https://kafka.apache.org/documentation/#brokerconfigs_socket.receive.buffer.bytes
-socket.receive.buffer.bytes={{ kafka_socket_receive_buffer_bytes }}
-
-# https://kafka.apache.org/documentation/#brokerconfigs_socket.request.max.bytes
-socket.request.max.bytes={{ kafka_socket_request_max_bytes }}
+# additional custom config
+{% if kafka_config is defined %}
+{% for key, value in kafka_config.items() %}
+{{ key }}={{ value }}
+{% endfor %}
+{% endif %}
