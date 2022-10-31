@@ -1,0 +1,58 @@
+# {{ ansible_managed }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_process.roles
+process.roles={{ kafka_process_roles | join(',') }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_node.id
+node.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_broker.id
+broker.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
+log.dirs={{ kafka_log_dirs | join(',') }}
+
+{% if kafka_controller_quorum_voters is defined %}
+# https://kafka.apache.org/documentation/#brokerconfigs_controller.quorum.voters
+controller.quorum.voters=
+{%- set comma = joiner(',') -%}
+{%- for voter in kafka_controller_quorum_voters -%}
+{{- comma() }}{{ voter | ansible.utils.ipaddr('int') }}@{{ voter }}:9093
+{%- endfor -%}
+{% endif %}
+
+# Listener Settings
+
+# https://kafka.apache.org/documentation/#brokerconfigs_listeners
+listeners=
+{%- set comma = joiner(',') -%}
+{%- for role in kafka_process_roles -%}
+{% if role == "controller" %}
+{%- set listener = "CONTROLLER://" + kafka_listener_address + ":9093" -%}
+{% else %}
+{%- set listener = "PLAINTEXT://" + kafka_listener_address + ":9092" -%}
+{% endif %}
+{{- comma() }}{{ listener }}
+{%- endfor %}
+
+
+# https://kafka.apache.org/documentation/#brokerconfigs_controller.listener.names
+controller.listener.names=CONTROLLER
+
+# https://kafka.apache.org/documentation/#brokerconfigs_listener.security.protocol.map
+listener.security.protocol.map=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+
+# https://kafka.apache.org/documentation/#brokerconfigs_num.network.threads
+num.network.threads={{ kafka_num_network_threads }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_num.io.threads
+num.io.threads={{ kafka_num_io_threads }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.send.buffer.bytes
+socket.send.buffer.bytes={{ kafka_socket_send_buffer_bytes }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.receive.buffer.bytes
+socket.receive.buffer.bytes={{ kafka_socket_receive_buffer_bytes }}
+
+# https://kafka.apache.org/documentation/#brokerconfigs_socket.request.max.bytes
+socket.request.max.bytes={{ kafka_socket_request_max_bytes }}
