@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ansible-role-kafka"
-version = "0.1.0"
+version = "0.2.0"
 description = "Install and configure Kafka with Ansible."
 authors = ["Remerge GmbH <sre@remerge.io>"]
 
