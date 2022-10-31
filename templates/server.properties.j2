@@ -4,10 +4,10 @@
 process.roles={{ kafka_process_roles | join(',') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_node.id
-node.id={{ kafka_listener_address | ipaddr('int') }}
+node.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_broker.id
-broker.id={{ kafka_listener_address | ipaddr('int') }}
+broker.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
 log.dirs={{ kafka_log_dirs | join(',') }}
@@ -17,7 +17,7 @@ log.dirs={{ kafka_log_dirs | join(',') }}
 controller.quorum.voters=
 {%- set comma = joiner(',') -%}
 {%- for voter in kafka_controller_quorum_voters -%}
-{{- comma() }}{{ voter | ipaddr('int') }}@{{ voter }}:9093
+{{- comma() }}{{ voter | ansible.utils.ipaddr('int') }}@{{ voter }}:9093
 {%- endfor -%}
 {% endif %}
 
