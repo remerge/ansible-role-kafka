@@ -38,3 +38,14 @@ brew install --cask docker
 brew install pre-commit pipx direnv copier
 brew install poetry
 ```
+
+### Ansible Installation
+
+Some Ansible collections and modules need Python libraries to function
+properly. To prevent clobbering your system installation of Python it is
+recommended to install Ansible with [pipx](https://pypa.github.io/pipx/):
+
+```shell
+pipx install --include-deps ansible
+pipx inject --include-apps ansible ansible-lint
+```

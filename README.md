@@ -1,6 +1,6 @@
 # Ansible Role for Kafka
 
-Install and configure Kafka with Ansible
+Install and configure Kafka with Ansible.
 
 The [Contributing Guide](CONTRIBUTING.md) explains how to work with and
 contribute to this repository.

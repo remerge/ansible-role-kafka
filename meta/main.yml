@@ -2,7 +2,7 @@
 galaxy_info:
   author: remerge
   role_name: kafka
-  description: Install and configure Kafka with Ansible
+  description: Install and configure Kafka with Ansible.
   license: apache-2.0
   company: remerge.io
   min_ansible_version: "2.10"

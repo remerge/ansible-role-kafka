@@ -1,12 +1,12 @@
 ---
 # Changes here will be overwritten by Copier
-_commit: v0.12.0
+_commit: v0.13.0
 _src_path: https://github.com/remerge/template.git
 google_cloud_gke_master_subnet: null
 google_cloud_project: ansible-role-kafka-[random_id]
 google_cloud_region: europe-west4
 google_cloud_zone: europe-west4-a
-project_description: Install and configure Kafka with Ansible
+project_description: Install and configure Kafka with Ansible.
 project_id: ansible-role-kafka
 project_license: apache-2.0
 project_name: Ansible Role for Kafka
