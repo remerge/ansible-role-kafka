@@ -1,6 +1,6 @@
 ---
 # Changes here will be overwritten by Copier
-_commit: v0.13.0-8-gf0b1919
+_commit: v0.13.1
 _src_path: https://github.com/remerge/template.git
 google_cloud_gke_master_subnet: null
 google_cloud_project: ansible-role-kafka-[random_id]
