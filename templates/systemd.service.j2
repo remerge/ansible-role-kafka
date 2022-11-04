@@ -6,6 +6,7 @@ Requires=network.target
 [Service]
 User={{ kafka_user }}
 Group={{ kafka_group }}
+Environment="KAFKA_OPTS=-javaagent:/opt/kafka/libs/{{ jmx_exporter_archive }}.jar=7071:/opt/kafka/config/jmx_exporter.yaml"
 EnvironmentFile=/opt/kafka/config/kafka.env
 ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
 ExecStop=/opt/kafka/bin/kafka-server-stop.sh
