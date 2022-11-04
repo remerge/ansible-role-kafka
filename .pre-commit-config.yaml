@@ -58,12 +58,12 @@ repos:
       - id: shellcheck
 
   - repo: https://github.com/hollow/pre-commit-actionlint
-    rev: "v1.6.19"
+    rev: "v1.6.22"
     hooks:
       - id: actionlint
 
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.8.5"
+    rev: "v6.8.6"
     hooks:
       - id: ansible-lint
         name: ansible-lint
@@ -79,13 +79,14 @@ repos:
       - id: ansible_role_find_unused_variable
       - id: ansible_role_fix_readability
 
+  - repo: https://github.com/bridgecrewio/checkov
+    rev: "2.2.32"
+    hooks:
+      - id: checkov
+        name: checkov
+        args: [--config-file=.checkov.yml]
+
   - repo: https://github.com/jorisroovers/gitlint
     rev: "v0.17.0"
     hooks:
       - id: gitlint
-
-  - repo: https://github.com/radix-ai/auto-smart-commit
-    rev: "v1.0.2"
-    hooks:
-      - id: auto-smart-commit
-        name: auto-smart-commit
