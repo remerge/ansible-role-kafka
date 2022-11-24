@@ -54,7 +54,7 @@ endif
 
 .PHONY: copier-copy
 copier-copy: ## copy template without merging updates
-	copier$(if $(FORCE), -f,)$(if $(REF), -r $(REF),) -w copy https://github.com/remerge/template.git .
+	copier$(if $(FORCE), -f,)$(if $(REF), -r $(REF),) -w copy gh:remerge/template .
 
 .PHONY: copier-update
 copier-update: ## update project from copier template
