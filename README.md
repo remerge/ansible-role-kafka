@@ -8,22 +8,48 @@ contribute to this repository.
 ## Example Playbook
 
 ```yml
+---
 - name: Install and configure Kafka
   hosts: kafka
   become: true
   pre_tasks:
-    - name: Set kafka_controller_group
-      ansible.builtin.set_fact:
-        kafka_controller_group: "{{ groups[cluster] | intersect(groups.kafka_controller) }}"
+    - name: Install Java 17
+      ansible.builtin.dnf:
+        name: java-17-openjdk
+        state: present
 
     - name: Set kafka_controller_quorum_voters
       ansible.builtin.set_fact:
-        kafka_controller_quorum_voters: "{{ kafka_controller_group | map('extract', hostvars, 'primary_ip4') }}"
+        kafka_controller_quorum_voters: "{{ groups.kafka_controller }}"
+
+    - name: Set controller process role
+      ansible.builtin.set_fact:
+        kafka_process_roles: [controller]
+      when:
+        - inventory_hostname in groups.kafka_controller
+
+    - name: Set broker process role
+      ansible.builtin.set_fact:
+        kafka_process_roles: [broker]
+      when:
+        - inventory_hostname in groups.kafka_broker
 
   roles:
-    - name: geerlingguy.java
-    - name: remerge.kafka
-      kafka_cluster_id: "{{ config_context.kafka_cluster_id }}"
-      kafka_log_dirs:
-        - /data/kafka/logs
+    - role: remerge.kafka
+      # /opt/kafka/bin/kafka-storage.sh random-uuid
+      kafka_cluster_id: "eGFY_ioORw2-OvrLlqMC3Q"
+      kafka_listen_address: "{{ ansible_default_ipv4.address }}"
+      kafka_log_dirs: [/data/kafka/logs]
+      kafka_env:
+        # disable Kafka loggc handling to log file
+        EXTRA_ARGS: ""
+        KAFKA_HEAP_OPTS: >-
+          -Xmx4G -Xms4G
+        KAFKA_JVM_PERFORMANCE_OPTS: >-
+          -server
+          -Xlog:gc
+          -XX:+UseShenandoahGC
+          -XX:+AlwaysPreTouch
+          -XX:+UseNUMA
+          -XX:+UseTransparentHugePages
 ```
