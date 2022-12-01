@@ -2,9 +2,13 @@
 # Kafka Version
 scala_version: "2.13"
 kafka_version: "3.3.1"
+jmx_exporter_version: "0.17.2"
 kafka_archive: "kafka_{{ scala_version }}-{{ kafka_version }}"
+jmx_exporter_archive: "jmx_prometheus_javaagent-{{ jmx_exporter_version }}"
 kafka_checksum: "sha512:d14d9cc97d1702649b33378f38060c4a6220850a3d7182d1af20e905cb98728e51f2aeec63121f5773a389d6b66891b7508e5d23584dd1a4e424825e3d54e3e0"
+jmx_exporter_checksum: "sha1:614e3c13696f1df9f87640a67c80dc3d5a7f9619"
 kafka_url: "https://downloads.apache.org/kafka/{{ kafka_version }}/{{ kafka_archive }}.tgz"
+jmx_exporter_url: "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/{{ jmx_exporter_version }}/{{ jmx_exporter_archive }}.jar"
 
 # Kafka Installation
 kafka_user: kafka
