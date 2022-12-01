@@ -53,6 +53,15 @@
     home: "/opt/kafka"
     state: present
 
+- name: Download JMX Exporter version {{ jmx_exporter_version }}
+  ansible.builtin.get_url:
+    url: "{{ jmx_exporter_url }}"
+    dest: "/opt/kafka/libs/{{ jmx_exporter_archive }}.jar"
+    checksum: "{{ jmx_exporter_checksum }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+
 - name: Copy kafka server.properties
   ansible.builtin.template:
     src: "server.properties.j2"
@@ -67,6 +76,16 @@
   ansible.builtin.template:
     src: "kafka.env.j2"
     dest: "/opt/kafka/config/kafka.env"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+  notify:
+    - Restart kafka
+
+- name: Copy JMX Exporter config
+  ansible.builtin.template:
+    src: "jmx_exporter.yaml.j2"
+    dest: "/opt/kafka/config/jmx_exporter.yaml"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0644
