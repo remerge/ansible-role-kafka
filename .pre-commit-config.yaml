@@ -80,7 +80,7 @@ repos:
       - id: ansible_role_fix_readability
 
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "2.2.89"
+    rev: "2.2.106"
     hooks:
       - id: checkov
         name: checkov

@@ -57,3 +57,13 @@ modules with the following command:
 ```shell
 pipx upgrade-all --include-injected
 ```
+
+### Ansible NetBox Inventory
+
+You need to create an API token for NetBox in order to load the inventory from
+NetBox into Ansible. This token should be stored in 1Password using the API
+Credentials template and can then be set in the current shell:
+
+```shell
+export NETBOX_API_KEY=$(op item get NETBOX_API_KEY --fields label=credential)
+```
