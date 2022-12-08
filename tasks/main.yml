@@ -92,6 +92,20 @@
   notify:
     - Restart kafka
 
+- name: Copy log4j config
+  ansible.builtin.template:
+    src: "log4j.properties.j2"
+    dest: "{{ item }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+  loop:
+    - /opt/kafka/config/log4j.properties
+    - /opt/kafka/config/connect-log4j.properties
+    - /opt/kafka/config/tools-log4j.properties
+  notify:
+    - Restart kafka
+
 - name: Format log directories
   ansible.builtin.command:
     argv:
@@ -113,16 +127,6 @@
     owner: "root"
     group: "root"
     mode: 0644
-
-- name: Copy log4j config
-  ansible.builtin.template:
-    src: "log4j.properties.j2"
-    dest: "/opt/kafka/config/log4j.properties"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-    mode: 0644
-  notify:
-    - Restart kafka
 
 - name: Flush handlers to prevent restart after start
   ansible.builtin.meta: flush_handlers
