@@ -63,7 +63,7 @@ repos:
       - id: actionlint
 
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.9.1"
+    rev: "v6.10.0a1"
     hooks:
       - id: ansible-lint
         name: ansible-lint
@@ -81,7 +81,7 @@ repos:
       - id: ansible_role_fix_readability
 
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "2.2.130"
+    rev: "2.2.148"
     hooks:
       - id: checkov
         name: checkov
