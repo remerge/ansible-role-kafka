@@ -1,6 +1,10 @@
 {{ ansible_managed }}
 
+{% if item == 'tools-log4j.properties' %}
+log4j.rootLogger=INFO, stderr
+{% else %}
 log4j.rootLogger=INFO, stdout
+{% endif %}
 
 log4j.appender.stdout=org.apache.log4j.ConsoleAppender
 log4j.appender.stdout.layout=org.apache.log4j.PatternLayout

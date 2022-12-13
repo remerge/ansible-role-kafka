@@ -95,14 +95,14 @@
 - name: Copy log4j config
   ansible.builtin.template:
     src: "log4j.properties.j2"
-    dest: "{{ item }}"
+    dest: "/opt/kafka/config/{{ item }}"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0644
   loop:
-    - /opt/kafka/config/log4j.properties
-    - /opt/kafka/config/connect-log4j.properties
-    - /opt/kafka/config/tools-log4j.properties
+    - log4j.properties
+    - connect-log4j.properties
+    - tools-log4j.properties
   notify:
     - Restart kafka
 
