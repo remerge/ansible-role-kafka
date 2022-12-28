@@ -8,6 +8,7 @@ default_install_hook_types:
   - prepare-commit-msg
 
 repos:
+  # https://github.com/pre-commit/pre-commit-hooks/tags
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
     hooks:
@@ -29,46 +30,54 @@ repos:
       - id: forbid-new-submodules
       - id: trailing-whitespace
 
+  # https://github.com/pre-commit/mirrors-prettier/tags
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v3.0.0-alpha.4"
     hooks:
       - id: prettier
         exclude: "^project/"
 
+  # https://github.com/igorshubovych/markdownlint-cli/tags
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: "v0.32.2"
     hooks:
       - id: markdownlint-fix
         name: markdownlint
 
+  # https://github.com/adrienverge/yamllint/tags
   - repo: https://github.com/adrienverge/yamllint
     rev: "v1.28.0"
     hooks:
       - id: yamllint
         entry: yamllint --strict
 
+  # https://github.com/pecigonzalo/pre-commit-shfmt/tags
   - repo: https://github.com/pecigonzalo/pre-commit-shfmt
     rev: "v2.1.0"
     hooks:
       - id: shell-fmt-go
 
+  # https://github.com/shellcheck-py/shellcheck-py/tags
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: "v0.8.0.4"
+    rev: "v0.9.0.2"
     hooks:
       - id: shellcheck
 
+  # https://github.com/hollow/pre-commit-actionlint/tags
   - repo: https://github.com/hollow/pre-commit-actionlint
     rev: "v1.6.22"
     hooks:
       - id: actionlint
 
+  # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.10.0a1"
+    rev: "v6.10.0"
     hooks:
       - id: ansible-lint
         name: ansible-lint
         entry: python3 -m ansiblelint -v --force-color --strict
 
+  # https://github.com/robertdebock/pre-commit/tags
   - repo: https://github.com/robertdebock/pre-commit
     rev: "v1.5.2"
     hooks:
@@ -80,13 +89,15 @@ repos:
       - id: ansible_role_find_unused_variable
       - id: ansible_role_fix_readability
 
+  # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "2.2.148"
+    rev: "2.2.208"
     hooks:
       - id: checkov
         name: checkov
         args: [--config-file=.checkov.yml]
 
+  # https://github.com/jorisroovers/gitlint/tags
   - repo: https://github.com/jorisroovers/gitlint
     rev: "v0.18.0"
     hooks:
