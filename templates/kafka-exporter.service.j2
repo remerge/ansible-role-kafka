@@ -1,0 +1,12 @@
+[Unit]
+Description=Kafka Exporter
+After=network.target
+Requires=network.target
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/opt/kafka_exporter/kafka_exporter --log.level=debug --log.enable-sarama --kafka.server {{ inventory_hostname }}:9092
+Restart=always
+
+[Install]
+WantedBy=default.target

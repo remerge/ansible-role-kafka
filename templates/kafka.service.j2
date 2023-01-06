@@ -2,16 +2,19 @@
 Description=Kafka Service
 After=network.target
 Requires=network.target
+StartLimitIntervalSec=0
 
 [Service]
 User={{ kafka_user }}
 Group={{ kafka_group }}
-Environment="KAFKA_OPTS=-javaagent:/opt/kafka/libs/{{ jmx_exporter_archive }}.jar=7071:/opt/kafka/config/jmx_exporter.yaml"
+Environment="KAFKA_OPTS=-javaagent:/opt/kafka/libs/{{ jmx_exporter_archive }}.jar=19092:/opt/kafka/config/jmx_exporter.yaml"
 EnvironmentFile=/opt/kafka/config/kafka.env
 ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
 ExecStop=/opt/kafka/bin/kafka-server-stop.sh
-Restart=on-failure
 SuccessExitStatus=143
+TimeoutStopSec=600
+Restart=always
+OOMScoreAdjust=-500
 
 [Install]
 WantedBy=default.target

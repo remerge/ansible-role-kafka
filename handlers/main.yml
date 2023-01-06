@@ -1,6 +1,12 @@
 ---
-- name: Restart kafka
+- name: Restart Kafka
   ansible.builtin.systemd:
     name: kafka
+    state: restarted
+    daemon_reload: true
+
+- name: Restart Kafka exporter
+  ansible.builtin.systemd:
+    name: kafka-exporter
     state: restarted
     daemon_reload: true

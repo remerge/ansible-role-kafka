@@ -48,7 +48,6 @@ recommended to install Ansible with [pipx](https://pypa.github.io/pipx/):
 ```shell
 pipx install --include-deps ansible
 pipx inject --include-apps ansible ansible-lint
-pipx inject ansible netaddr
 ```
 
 You can update all your pipx packages, including Ansible and all injected
