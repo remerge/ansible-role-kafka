@@ -102,7 +102,7 @@
 
       exec /opt/kafka/bin/kafka-server-stop.sh
     mode: 0554
-    user: "{{ kafka_user }}"
+    owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
   when: kafka_use_consul
 
