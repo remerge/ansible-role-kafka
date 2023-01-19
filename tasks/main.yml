@@ -98,7 +98,7 @@
         sleep 1
       done
 
-      echo "broker reports fully replicated, stopping now"
+      echo "Broker reports fully replicated, stopping now"
 
       exec /opt/kafka/bin/kafka-server-stop.sh
     mode: 0554
