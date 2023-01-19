@@ -15,7 +15,8 @@ ExecStop=/opt/kafka/bin/kafka-server-stop.sh
 {% endif %}
 TimeoutStopSec=300
 OOMScoreAdjust=-500
-Restart=on-failure
+Restart=always
+StartLimitIntervalSec=0
 SuccessExitStatus=143
 
 [Install]
