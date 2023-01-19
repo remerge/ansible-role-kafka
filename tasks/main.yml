@@ -93,7 +93,7 @@
     content: |
       #!/usr/bin/bash
 
-      while curl -s localhost:7071/metrics|grep "^kafka_cluster_partition_underreplicated{.*} [^0]"; do
+      while /usr/bin/curl -s localhost:7071/metrics|/usr/bin/grep "^kafka_cluster_partition_underreplicated{.*} [^0]"; do
         echo Underreplication detected, waiting...
         sleep 1
       done
