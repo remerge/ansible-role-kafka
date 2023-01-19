@@ -8,7 +8,13 @@ User={{ kafka_user }}
 Group={{ kafka_group }}
 EnvironmentFile=/opt/kafka/config/kafka.env
 ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+{% if kafka_use_consul %}
+ExecStop=/usr/bin/consul lock kafka/safe-stop /opt/kafka/bin/kafka-safe-stop.sh
+{% else %}
 ExecStop=/opt/kafka/bin/kafka-server-stop.sh
+{% endif %}
+TimeoutStopSec=300
+OOMScoreAdjust=-500
 Restart=on-failure
 SuccessExitStatus=143
 

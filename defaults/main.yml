@@ -16,4 +16,7 @@ kafka_process_roles:
   - controller
 
 # Listener Settings
-kafka_listener_address: "{{ ansible_default_ipv4.address }}"
+kafka_listener_address: "{{ primary_ipv4.address }}"
+
+# Use consul for safe restarts
+kafka_use_consul: true

@@ -87,6 +87,25 @@
   become: true
   become_user: kafka
 
+- name: Install kafka-safe-stop.sh
+  ansible.builtin.copy:
+    dest: /opt/kafka/bin/kafka-safe-stop.sh
+    content: |
+      #!/usr/bin/bash
+
+      while curl -s localhost:7071/metrics|grep "^kafka_cluster_partition_underreplicated{.*} [^0]"; do
+        echo Underreplication detected, waiting...
+        sleep 1
+      done
+
+      echo "No replication reported, stopping now"
+
+      exec /opt/kafka/bin/kafka-server-stop.sh
+    mode: 0554
+    user: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+  when: kafka_use_consul
+
 - name: Copy kafka systemd service
   ansible.builtin.template:
     src: "systemd.service.j2"
