@@ -18,6 +18,9 @@ rules:
 - pattern : kafka.coordinator.(\w+)<type=(.+), name=(.+)><>Value
   name: kafka_coordinator_$1_$2_$3
   type: GAUGE
+- pattern : kafka.controller.(\w+)<type=(.+), name=(.+)><>Value
+  name: kafka_controller_$1_$2_$3
+  type: GAUGE
 
 # Generic per-second counters with 0-2 key/value pairs
 - pattern: kafka.(\w+)<type=(.+), name=(.+)PerSec\w*, (.+)=(.+), (.+)=(.+)><>Count
