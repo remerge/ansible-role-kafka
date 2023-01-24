@@ -1,0 +1,48 @@
+---
+- name: Download Kafka exporter
+  ansible.builtin.get_url:
+    url: "{{ kafka_exporter_url }}"
+    dest: /tmp/{{ kafka_exporter_archive }}.tar.gz
+    checksum: "{{ kafka_exporter_checksum }}"
+    mode: 0644
+
+- name: Unarchive Kafka exporter
+  ansible.builtin.unarchive:
+    src: /tmp/{{ kafka_exporter_archive }}.tar.gz
+    dest: /opt
+    remote_src: true
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    creates: /opt/{{ kafka_exporter_archive }}
+  notify:
+    - Restart Kafka exporter
+
+- name: Create Kafka exporter symlink
+  ansible.builtin.file:
+    src: /opt/{{ kafka_exporter_archive }}
+    dest: /opt/kafka_exporter
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    state: link
+  notify:
+    - Restart Kafka exporter
+
+- name: Copy Kafka systemd service
+  ansible.builtin.template:
+    src: kafka-exporter.service.j2
+    dest: /usr/lib/systemd/system/kafka-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Restart Kafka exporter
+
+- name: Flush handlers to prevent restart after start
+  ansible.builtin.meta: flush_handlers
+
+- name: Start Kafka exporter
+  ansible.builtin.systemd:
+    name: kafka-exporter
+    state: started
+    daemon_reload: true
+    enabled: true

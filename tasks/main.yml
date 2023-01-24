@@ -1,26 +1,30 @@
 ---
-- name: Download kafka version {{ kafka_version }}
+- name: Download Kafka
   ansible.builtin.get_url:
     url: "{{ kafka_url }}"
-    dest: "/tmp/{{ kafka_archive }}.tar.gz"
+    dest: /tmp/{{ kafka_archive }}.tar.gz
     checksum: "{{ kafka_checksum }}"
     mode: 0644
 
-- name: Create kafka group
+- name: Create Kafka group
   ansible.builtin.group:
     name: "{{ kafka_group }}"
     system: true
     state: present
+  notify:
+    - Restart Kafka
 
-- name: Create kafka user
+- name: Create Kafka user
   ansible.builtin.user:
     name: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     create_home: false
     system: true
     state: present
+  notify:
+    - Restart Kafka
 
-- name: Create log directory
+- name: Create Kafka log directory
   become: true
   ansible.builtin.file:
     path: "{{ item }}"
@@ -28,74 +32,61 @@
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0750
-  with_items: "{{ kafka_log_dirs }}"
+  loop: "{{ kafka_log_dirs }}"
 
-- name: Unarchive kafka download
+- name: Unarchive Kafka download
   ansible.builtin.unarchive:
-    copy: false
-    src: "/tmp/{{ kafka_archive }}.tar.gz"
-    dest: "/opt/"
+    src: /tmp/{{ kafka_archive }}.tar.gz
+    dest: /opt
+    remote_src: true
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    creates: "/opt/{{ kafka_archive }}"
+    creates: /opt/{{ kafka_archive }}
+  notify:
+    - Restart Kafka
 
-- name: Create kafka symlink
+- name: Create Kafka symlink
   ansible.builtin.file:
-    src: "/opt/{{ kafka_archive }}"
-    dest: "/opt/kafka"
+    src: /opt/{{ kafka_archive }}
+    dest: /opt/kafka
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     state: link
+  notify:
+    - Restart Kafka
 
-- name: Set kafka user home
+- name: Set Kafka user home
   ansible.builtin.user:
     name: "{{ kafka_user }}"
-    home: "/opt/kafka"
+    home: /opt/kafka
     state: present
+  notify:
+    - Restart Kafka
 
-- name: Download JMX Exporter version {{ jmx_exporter_version }}
-  ansible.builtin.get_url:
-    url: "{{ jmx_exporter_url }}"
-    dest: "/opt/kafka/libs/{{ jmx_exporter_archive }}.jar"
-    checksum: "{{ jmx_exporter_checksum }}"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-    mode: 0644
-
-- name: Copy kafka server.properties
+- name: Copy Kafka server.properties
   ansible.builtin.template:
-    src: "server.properties.j2"
-    dest: "/opt/kafka/config/server.properties"
+    src: server.properties.j2
+    dest: /opt/kafka/config/server.properties
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0644
   notify:
-    - Restart kafka
+    - Restart Kafka
 
-- name: Copy kafka environment
+- name: Copy Kafka environment
   ansible.builtin.template:
-    src: "kafka.env.j2"
-    dest: "/opt/kafka/config/kafka.env"
+    src: kafka.env.j2
+    dest: /opt/kafka/config/kafka.env
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0644
   notify:
-    - Restart kafka
+    - Restart Kafka
 
-- name: Copy JMX Exporter config
+- name: Copy Kafka log4j config
   ansible.builtin.template:
-    src: "jmx_exporter.yaml.j2"
-    dest: "/opt/kafka/config/jmx_exporter.yaml"
-    owner: "{{ kafka_user }}"
-    group: "{{ kafka_group }}"
-    mode: 0644
-  notify:
-    - Restart kafka
-
-- name: Copy log4j config
-  ansible.builtin.template:
-    src: "log4j.properties.j2"
-    dest: "/opt/kafka/config/{{ item }}"
+    src: log4j.properties.j2
+    dest: /opt/kafka/config/{{ item }}
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: 0644
@@ -104,9 +95,9 @@
     - connect-log4j.properties
     - tools-log4j.properties
   notify:
-    - Restart kafka
+    - Restart Kafka
 
-- name: Format log directories
+- name: Format Kafka log directories
   ansible.builtin.command:
     argv:
       - "/opt/kafka/bin/kafka-storage.sh"
@@ -120,18 +111,41 @@
   become: true
   become_user: kafka
 
-- name: Copy kafka systemd service
-  ansible.builtin.template:
-    src: "systemd.service.j2"
-    dest: "/usr/lib/systemd/system/kafka.service"
-    owner: "root"
-    group: "root"
+- name: Download JMX exporter
+  ansible.builtin.get_url:
+    url: "{{ jmx_exporter_url }}"
+    dest: /opt/kafka/libs/{{ jmx_exporter_archive }}.jar
+    checksum: "{{ jmx_exporter_checksum }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
     mode: 0644
+  notify:
+    - Restart Kafka
+
+- name: Copy JMX exporter config
+  ansible.builtin.template:
+    src: jmx_exporter.yaml.j2
+    dest: /opt/kafka/config/jmx_exporter.yaml
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_group }}"
+    mode: 0644
+  notify:
+    - Restart Kafka
+
+- name: Copy Kafka systemd service
+  ansible.builtin.template:
+    src: kafka.service.j2
+    dest: /usr/lib/systemd/system/kafka.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - Restart Kafka
 
 - name: Flush handlers to prevent restart after start
   ansible.builtin.meta: flush_handlers
 
-- name: Start kafka
+- name: Start Kafka
   ansible.builtin.systemd:
     name: kafka
     state: started
