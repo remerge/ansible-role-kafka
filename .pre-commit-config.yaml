@@ -27,7 +27,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
-      - id: forbid-new-submodules
+      - id: forbid-submodules
       - id: trailing-whitespace
 
   # https://github.com/pre-commit/mirrors-prettier/tags
@@ -65,7 +65,7 @@ repos:
 
   # https://github.com/hollow/pre-commit-actionlint/tags
   - repo: https://github.com/hollow/pre-commit-actionlint
-    rev: "v1.6.22"
+    rev: "v1.6.23"
     hooks:
       - id: actionlint
 
@@ -91,7 +91,7 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "2.2.281"
+    rev: "2.2.304"
     hooks:
       - id: checkov
         name: checkov
