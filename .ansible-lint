@@ -1,6 +1,6 @@
 ---
 exclude_paths:
-  - .ansible/ansible_collections
+  - .ansible/collections
   - .ansible/roles
   - .cache
   - .github

@@ -71,12 +71,6 @@ pre-commit-install: ## install pre-commit hook
 	pre-commit install -t pre-commit -t prepare-commit-msg -t commit-msg
 install:: pre-commit-install
 
-.PHONY: pre-commit-update
-pre-commit-update: ## update pre-commit hook and modules
-pre-commit-update: .git/hooks/pre-commit
-	pre-commit autoupdate
-update:: pre-commit-update
-
 .PHONY: pre-commit-check
 pre-commit-check: ## run pre commit hooks
 pre-commit-check: .git/hooks/pre-commit
