@@ -18,3 +18,8 @@ kafka_process_roles:
   - controller
 
 kafka_listener_address: "{{ ansible_default_ipv4.address }}"
+
+kafka_exporter_version: "1.6.0"
+kafka_exporter_archive: "kafka_exporter-{{ kafka_exporter_version }}.linux-amd64"
+kafka_exporter_checksum: "sha512:18a52a92f8c1ef06175f2cb7e12b81aed75b4a87884fb3c3120c6671e2b25e3a3b52dda02eb952ba22f892598c8a47c474b625d481701d83382650c8b4616550"
+kafka_exporter_url: "https://github.com/danielqsj/kafka_exporter/releases/download/v{{ kafka_exporter_version }}/kafka_exporter-{{ kafka_exporter_version }}.linux-amd64.tar.gz"
