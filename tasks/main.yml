@@ -154,4 +154,5 @@
 
 - name: Install, configure, and start kafka-exporter
   ansible.builtin.import_tasks: exporter.yml
-  when: use_kafka_exporter
+  when:
+    - "'broker' in kafka_process_roles"
