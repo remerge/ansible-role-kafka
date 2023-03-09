@@ -38,31 +38,3 @@ brew install --cask docker
 brew install pre-commit pipx direnv copier
 brew install poetry
 ```
-
-### Ansible Installation
-
-Some Ansible collections and modules need Python libraries to function
-properly. To prevent clobbering your system installation of Python it is
-recommended to install Ansible with [pipx](https://pypa.github.io/pipx/):
-
-```shell
-pipx install --include-deps ansible
-pipx inject --include-apps ansible ansible-lint
-```
-
-You can update all your pipx packages, including Ansible and all injected
-modules with the following command:
-
-```shell
-pipx upgrade-all --include-injected
-```
-
-### Ansible NetBox Inventory
-
-You need to create an API token for NetBox in order to load the inventory from
-NetBox into Ansible. This token should be stored in 1Password using the API
-Credentials template and can then be set in the current shell:
-
-```shell
-export NETBOX_API_KEY=$(op item get NETBOX_API_KEY --fields label=credential)
-```
