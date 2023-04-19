@@ -1,2 +1,5 @@
 # auto generated
 .copier-answers.yml
+
+# Dell server configuration profiles
+playbooks/files/*.rmge.net.json

@@ -46,7 +46,7 @@ repos:
 
   # https://github.com/adrienverge/yamllint/tags
   - repo: https://github.com/adrienverge/yamllint
-    rev: "v1.29.0"
+    rev: "v1.31.0"
     hooks:
       - id: yamllint
         entry: yamllint --strict
@@ -57,25 +57,29 @@ repos:
     hooks:
       - id: shell-fmt-go
 
-  # https://github.com/shellcheck-py/shellcheck-py/tags
-  - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: "v0.9.0.2"
+  # https://github.com/koalaman/shellcheck-precommit/tags
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: "v0.9.0"
     hooks:
       - id: shellcheck
+        name: shellcheck
 
-  # https://github.com/hollow/pre-commit-actionlint/tags
-  - repo: https://github.com/hollow/pre-commit-actionlint
-    rev: "v1.6.23"
+  # https://github.com/rhysd/actionlint/tags
+  - repo: https://github.com/rhysd/actionlint
+    rev: "v1.6.24"
     hooks:
-      - id: actionlint
+      - id: actionlint-docker
+        name: actionlint
 
   # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.14.1"
+    rev: "v6.15.0"
     hooks:
       - id: ansible-lint
         name: ansible-lint
         entry: python3 -m ansiblelint -v --force-color --strict
+        additional_dependencies:
+          - "passlib"
 
   # https://github.com/robertdebock/pre-commit/tags
   - repo: https://github.com/robertdebock/pre-commit
@@ -91,7 +95,7 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "2.3.71"
+    rev: "2.3.224"
     hooks:
       - id: checkov
         name: checkov
@@ -99,7 +103,7 @@ repos:
 
   # https://github.com/jorisroovers/gitlint/tags
   - repo: https://github.com/jorisroovers/gitlint
-    rev: "v0.18.0"
+    rev: "v0.19.1"
     hooks:
       - id: gitlint
 
