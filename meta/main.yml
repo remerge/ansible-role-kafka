@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: kafka
-  description: Install and configure Kafka with Ansible.
+  description: Ansible Role for Kafka
   license: apache-2.0
   author: remerge
   company: remerge.io

@@ -554,8 +554,22 @@ go.work
 
 # Custom ignores for Go projects
 .build/
+.tools/
 cache/
 
 # Ignore SSH keys
 id_*
 *.key
+
+# Ignore Terraform lock and cache from submodules
+*/**/.terraform
+*/**/.terraform.lock.hcl
+
+# Allow all .tfvars files even though the default gitignore file for Terraform
+# excludes these. These files should normally not be part of version control as
+# they are likely to contain sensitive data, such as password, private keys, and
+# other secrets. However, we provide all sensitive variables to Terraform
+# through Terraform Cloud and only use .tfvars files for non-sensitive variables
+# only.
+!*.tfvars
+!*.tfvars.json
