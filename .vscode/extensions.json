@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "redhat.ansible",
     "ms-python.autopep8",
     "ms-python.black-formatter",
     "ms-python.flake8",
@@ -10,13 +11,13 @@
     "ms-toolsai.jupyter",
     "aaron-bond.better-comments",
     "bierner.markdown-emoji",
-    "bungcip.better-toml",
     "DavidAnson.vscode-markdownlint",
     "DotJoshJohnson.xml",
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
     "github.vscode-github-actions",
     "GitHub.vscode-pull-request-github",
+    "jasonnutter.vscode-codeowners",
     "mkhl.direnv",
     "mkhl.shfmt",
     "ms-azuretools.vscode-docker",
@@ -25,6 +26,7 @@
     "redhat.vscode-yaml",
     "samuelcolvin.jinjahtml",
     "sharat.vscode-brewfile",
+    "tamasfe.even-better-toml",
     "timonwong.shellcheck",
     "wholroyd.jinja",
     "yzhang.markdown-all-in-one"
