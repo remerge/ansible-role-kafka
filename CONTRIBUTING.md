@@ -38,3 +38,7 @@ brew install --cask docker
 brew install pre-commit pipx direnv copier
 brew install poetry
 ```
+
+Once `pre-commit` hook is activated (`make pre-commit-install`),
+set of formatting and linting routines is run automatically on each commit.
+The step could be avoided by providing `--no-verify` flag for `git commit`.
