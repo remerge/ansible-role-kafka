@@ -1,11 +1,8 @@
 {
-  "python.formatting.provider": "black",
-  "python.linting.pylintEnabled": true,
-  "python.linting.flake8Enabled": true,
   "[python]": {
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
   "python.defaultInterpreterPath": ".venv/bin/python",
   "ansible.python.interpreterPath": ".venv/bin/python",
