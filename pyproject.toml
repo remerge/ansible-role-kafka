@@ -5,7 +5,7 @@ description = "Ansible Role for Kafka"
 authors = ["Remerge GmbH <core@remerge.io>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.10.1"
@@ -14,7 +14,7 @@ flake8-bugbear = "^23.9.16"
 pylint = "^3.0.2"
 tox = "^4.11.3"
 molecule = { extras = ["docker"], version = "^6.0.2" }
-ansible-lint = { version = "^6.21.1", markers = "platform_system != 'Windows'" }
+ansible-lint = { version = "^6.22.0", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

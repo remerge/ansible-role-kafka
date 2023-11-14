@@ -74,7 +74,7 @@ repos:
 
   # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.21.1"
+    rev: "v6.22.0"
     hooks:
       - id: ansible-lint
         name: ansible-lint
@@ -96,7 +96,7 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "3.0.21"
+    rev: "3.0.24"
     hooks:
       - id: checkov
         name: checkov
