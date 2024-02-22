@@ -33,21 +33,21 @@ repos:
 
   # https://github.com/pre-commit/mirrors-prettier/tags
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: "v3.0.3"
+    rev: "v3.1.0"
     hooks:
       - id: prettier
         exclude: "^project/"
 
   # https://github.com/igorshubovych/markdownlint-cli/tags
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: "v0.37.0"
+    rev: "v0.39.0"
     hooks:
       - id: markdownlint-fix
         name: markdownlint
 
   # https://github.com/adrienverge/yamllint/tags
   - repo: https://github.com/adrienverge/yamllint
-    rev: "v1.32.0"
+    rev: "v1.35.1"
     hooks:
       - id: yamllint
         entry: yamllint --strict
@@ -74,7 +74,7 @@ repos:
 
   # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v6.21.1"
+    rev: "v24.2.0"
     hooks:
       - id: ansible-lint
         name: ansible-lint
@@ -96,7 +96,7 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "3.0.21"
+    rev: "3.2.22"
     hooks:
       - id: checkov
         name: checkov
@@ -113,3 +113,4 @@ repos:
     rev: "v0.19.0"
     hooks:
       - id: woke-from-source
+        args: [--config=.woke.yaml]
