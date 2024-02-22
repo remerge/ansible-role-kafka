@@ -6,25 +6,42 @@ on:
   push:
     branches: [main, master]
 
-permissions: read-all
+permissions:
+  actions: none
+  checks: none
+  contents: read
+  deployments: none
+  discussions: none
+  id-token: none
+  issues: none
+  packages: none
+  pages: none
+  pull-requests: none
+  repository-projects: none
+  security-events: none
+  statuses: none
 
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
+        # https://github.com/actions/checkout/releases
         uses: actions/checkout@v4
 
       - name: Install poetry
+        # https://github.com/snok/install-poetry/releases
         uses: snok/install-poetry@v1
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        # https://github.com/actions/setup-python/releases
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
           cache: "poetry"
 
       - name: Load envrc
+        # https://github.com/HatsuneMiku3939/direnv-action/releases
         uses: HatsuneMiku3939/direnv-action@v1
 
       - name: Setup pre-commit
@@ -34,4 +51,5 @@ jobs:
         run: make install
 
       - name: Run pre-commit checks
-        uses: pre-commit/action@v3.0.0
+        # https://github.com/pre-commit/action/releases
+        uses: pre-commit/action@v3.0.1

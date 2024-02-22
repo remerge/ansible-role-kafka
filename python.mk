@@ -10,5 +10,6 @@ update:: python-update
 
 .PHONY: python-clean
 python-clean: ## remove current Python virtualenv
-	poetry env remove python
+	poetry env remove python || :
+	rm -rf .venv
 clean:: python-clean
