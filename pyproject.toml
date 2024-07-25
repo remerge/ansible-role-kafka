@@ -3,18 +3,17 @@ name = "ansible-role-kafka"
 version = "0.0.0"
 description = "Ansible Role for Kafka"
 authors = ["Remerge GmbH <core@remerge.io>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.10, < 3.12"
+python = "^3.10, < 3.13"
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.2.0"
-flake8 = "^7.0.0"
-flake8-bugbear = "^24.2.6"
-pylint = "^3.0.3"
-tox = "^4.13.0"
-molecule = { extras = ["docker"], version = "^24.2.0" }
-ansible-lint = { version = "^24.2.0", markers = "platform_system != 'Windows'" }
+black = "^24.4.2"
+flake8 = "^7.1.0"
+flake8-bugbear = "^24.4.26"
+pylint = "^3.2.5"
+ansible-lint = { version = "^24.7.0", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

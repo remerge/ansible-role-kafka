@@ -1,6 +1,5 @@
 {
   "[python]": {
-    "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
@@ -21,5 +20,6 @@
   "editor.formatOnSave": true,
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true
+  "files.trimTrailingWhitespace": true,
+  "prettier.requireConfig": true
 }
