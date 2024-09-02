@@ -1,14 +1,19 @@
 ---
 scala_version: "2.13"
-kafka_version: "3.6.0"
+kafka_version: "3.8.0"
 kafka_archive: "kafka_{{ scala_version }}-{{ kafka_version }}"
-kafka_checksum: "sha512:98d20f475bccc11eb3cf05362112c788eea7bfc88abddba66cfcfb48880d3bb97918a90d44eb7c1720527bebca93dd231002b5159876f6ee8b7fcd91cc1b0644"
+kafka_checksum: "sha512:0a33b7be7b6fa53249ba80f9d02cda71ed81927c160aa6ee9be1e3d3c1c4b50466ffc905293143fd88ceac7f5e7d8f5bec28ef972addd3c459cc8b1291e738aa"
 kafka_url: "https://archive.apache.org/dist/kafka/{{ kafka_version }}/{{ kafka_archive }}.tgz"
 
-jmx_exporter_version: "0.20.0"
+jmx_exporter_version: "1.0.1"
 jmx_exporter_archive: "jmx_prometheus_javaagent-{{ jmx_exporter_version }}"
-jmx_exporter_checksum: "sha512:c392df22a888114bc6eaec9b89a3d4cd25cfd2120b4f9c0858cfedecc428ae6d265463097c283cba57d1f20b8742a51aaddbcce157c913630246224117086bac"
+jmx_exporter_checksum: "sha512:f81d876e8110cbabd4a9cb3fe1740ec2d896ec4bce5cb5049a2d74c40f43781418cea246f40e6afdfabbdf0e162cb837625f496dedcb76aebbba53b6ae7cacba"
 jmx_exporter_url: "https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/{{ jmx_exporter_version }}/{{ jmx_exporter_archive }}.jar"
+
+kafka_exporter_version: "1.8.0"
+kafka_exporter_archive: "kafka_exporter-{{ kafka_exporter_version }}.linux-amd64"
+kafka_exporter_checksum: "sha512:bb38dc2c0ce0dcbcf208beab0d75f323e05595486b43dd7d0d478c858621fec828d6070099b3972ac56b5adeaab34947ecf0947b8b3c4f6f8085af1b28043268"
+kafka_exporter_url: "https://github.com/danielqsj/kafka_exporter/releases/download/v{{ kafka_exporter_version }}/{{ kafka_exporter_archive }}.tar.gz"
 
 kafka_user: kafka
 kafka_group: kafka
@@ -18,8 +23,3 @@ kafka_process_roles:
   - controller
 
 kafka_listener_address: "{{ ansible_default_ipv4.address }}"
-
-kafka_exporter_version: "1.7.0"
-kafka_exporter_archive: "kafka_exporter-{{ kafka_exporter_version }}.linux-amd64"
-kafka_exporter_checksum: "sha512:1877f640baee81563c88dce935ad875b4bdfa83ba264bea24922573c8d8f994f0f661620c365fc51d1c3888a3f12f8c3564330f87ee491045f41b118ba5c4376"
-kafka_exporter_url: "https://github.com/danielqsj/kafka_exporter/releases/download/v{{ kafka_exporter_version }}/kafka_exporter-{{ kafka_exporter_version }}.linux-amd64.tar.gz"
