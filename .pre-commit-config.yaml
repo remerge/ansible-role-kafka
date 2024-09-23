@@ -18,10 +18,7 @@ repos:
       - id: check-merge-conflict
       - id: check-shebang-scripts-are-executable
       - id: check-symlinks
-      - id: check-toml
       - id: check-vcs-permalinks
-      - id: check-xml
-      - id: check-yaml
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
@@ -78,11 +75,11 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "3.2.235"
+    rev: "3.2.254"
     hooks:
       - id: checkov
         name: checkov
-        args: [--config-file=.checkov.yml]
+        args: [--config-file=.checkov.yml, --skip-path=vendor]
 
   # https://github.com/jorisroovers/gitlint/tags
   - repo: https://github.com/jorisroovers/gitlint
@@ -99,7 +96,7 @@ repos:
 
   # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v24.7.0"
+    rev: "v24.9.0"
     hooks:
       - id: ansible-lint
         name: ansible-lint

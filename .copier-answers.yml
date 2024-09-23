@@ -1,6 +1,6 @@
 ---
 # Changes here will be overwritten by Copier
-_commit: v2.30.0
+_commit: v2.34.0
 _src_path: gh:remerge/template
 project_id: ansible-role-kafka
 project_license: apache-2.0
@@ -8,3 +8,4 @@ project_name: Ansible Role for Kafka
 project_owner: core
 project_type: ansible-role
 use_python: true
+use_ruby: false

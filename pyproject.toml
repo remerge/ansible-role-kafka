@@ -12,8 +12,8 @@ python = "^3.10, < 3.13"
 black = "^24.8.0"
 flake8 = "^7.1.1"
 flake8-bugbear = "^24.8.19"
-pylint = "^3.2.6"
-ansible-lint = { version = "^24.7.0", markers = "platform_system != 'Windows'" }
+pylint = "^3.3.0"
+ansible-lint = { version = "^24.9.2", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
