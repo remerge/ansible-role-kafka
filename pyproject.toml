@@ -1,20 +1,30 @@
-[tool.poetry]
+[project]
 name = "ansible-role-kafka"
 version = "0.0.0"
 description = "Ansible Role for Kafka"
-authors = ["Remerge GmbH <core@remerge.io>"]
-package-mode = false
+authors = [{ name = "Remerge GmbH", email = "core@remerge.io" }]
+requires-python = ">=3.11,<3.14"
+readme = "README.md"
+dependencies = [
+]
 
-[tool.poetry.dependencies]
-python = "^3.10, < 3.13"
+[dependency-groups]
+dev = [
+    "ruff>=0.12.2,<0.13",
+    "ansible-lint>=25.6.1,<26 ; platform_system != 'Windows'",
+    "ansible-dev-tools>=25.5.2,<26",
+]
+test = [
+    "pytest>=8.4.1,<9",
+]
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.8.0"
-flake8 = "^7.1.1"
-flake8-bugbear = "^24.8.19"
-pylint = "^3.3.0"
-ansible-lint = { version = "^24.9.2", markers = "platform_system != 'Windows'" }
+[tool.uv]
+package = false
+default-groups = [
+    "dev",
+    "test",
+]
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

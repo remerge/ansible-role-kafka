@@ -4,7 +4,7 @@
     url: "{{ kafka_url }}"
     dest: /tmp/{{ kafka_archive }}.tar.gz
     checksum: "{{ kafka_checksum }}"
-    mode: 0644
+    mode: "0644"
 
 - name: Create Kafka group
   ansible.builtin.group:
@@ -31,7 +31,7 @@
     state: directory
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0750
+    mode: "0750"
   loop: "{{ kafka_log_dirs }}"
 
 - name: Unarchive Kafka download
@@ -69,7 +69,7 @@
     dest: /opt/kafka/config/server.properties
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart Kafka
 
@@ -79,7 +79,7 @@
     dest: /opt/kafka/config/kafka.env
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart Kafka
 
@@ -89,7 +89,7 @@
     dest: /opt/kafka/config/{{ item }}
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0644
+    mode: "0644"
   loop:
     - log4j.properties
     - connect-log4j.properties
@@ -118,7 +118,7 @@
     checksum: "{{ jmx_exporter_checksum }}"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart Kafka
 
@@ -128,7 +128,7 @@
     dest: /opt/kafka/config/jmx_exporter.yaml
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart Kafka
 
@@ -138,7 +138,7 @@
     dest: /usr/lib/systemd/system/kafka.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
     - Restart Kafka
 

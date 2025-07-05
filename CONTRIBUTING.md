@@ -25,18 +25,16 @@ need to be installed manually.
 - [docker](https://www.docker.com/products/docker-desktop/) or access to a
   working docker host
 - [pre-commit](https://pre-commit.com) to run formatting and linting
-- [pipx](https://pypa.github.io/pipx/) to install global dependencies
 - [direnv](https://direnv.net) to ensure a working environment
 - [copier](https://copier.readthedocs.io) to update this repository from the
   template
-- [poetry](https://python-poetry.org) to install Python project dependencies
+- [uv](https://docs.astral.sh/uv/) to install Python project dependencies
 
 Most dependencies can be installed using [Homebrew](https://brew.sh):
 
 ```shell
-brew install --cask docker
-brew install pre-commit pipx direnv copier
-brew install poetry
+brew install docker pre-commit direnv copier
+brew install uv
 ```
 
 Once `pre-commit` hook is activated (`make pre-commit-install`),
