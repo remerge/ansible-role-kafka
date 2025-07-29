@@ -6,6 +6,7 @@ exclude_paths:
   - .ansible/roles
   - .cache
   - .github
+  - .terraform
   - .tox
   - meta/preferences.yml
   - molecule/default/collections.yml
