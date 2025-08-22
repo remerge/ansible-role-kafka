@@ -10,7 +10,7 @@ default_install_hook_types:
 repos:
   # https://github.com/pre-commit/pre-commit-hooks/tags
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v5.0.0"
+    rev: "v6.0.0"
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -61,7 +61,7 @@ repos:
 
   # https://github.com/koalaman/shellcheck-precommit/tags
   - repo: https://github.com/koalaman/shellcheck-precommit
-    rev: "v0.10.0"
+    rev: "v0.11.0"
     hooks:
       - id: shellcheck
         name: shellcheck
@@ -75,7 +75,7 @@ repos:
 
   # https://github.com/bridgecrewio/checkov/tags
   - repo: https://github.com/bridgecrewio/checkov
-    rev: "3.2.447"
+    rev: "3.2.461"
     hooks:
       - id: checkov
         name: checkov
@@ -96,7 +96,7 @@ repos:
 
   # https://github.com/ansible/ansible-lint/tags
   - repo: https://github.com/ansible/ansible-lint
-    rev: "v25.6.1"
+    rev: "v25.8.1"
     hooks:
       - id: ansible-lint
         name: ansible-lint
@@ -119,7 +119,7 @@ repos:
 
   # https://github.com/astral-sh/ruff-pre-commit/tags
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.2
+    rev: v0.12.9
     hooks:
       - id: ruff-check
       - id: ruff-format
