@@ -4,10 +4,10 @@
 process.roles={{ kafka_process_roles | join(',') }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_node.id
-node.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
+node.id={{ kafka_node_id| default(kafka_listener_address | ansible.utils.ipaddr('int')) }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_broker.id
-broker.id={{ kafka_listener_address | ansible.utils.ipaddr('int') }}
+broker.id={{ kafka_node_id| default(kafka_listener_address | ansible.utils.ipaddr('int')) }}
 
 # https://kafka.apache.org/documentation/#brokerconfigs_log.dirs
 log.dirs={{ kafka_log_dirs | join(',') }}
