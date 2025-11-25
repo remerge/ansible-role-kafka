@@ -3,19 +3,19 @@ name = "ansible-role-kafka"
 version = "0.0.0"
 description = "Ansible Role for Kafka"
 authors = [{ name = "Remerge GmbH", email = "core@remerge.io" }]
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.14,<3.15"
 readme = "README.md"
 dependencies = [
 ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.12.2,<0.13",
-    "ansible-lint>=25.6.1,<26 ; platform_system != 'Windows'",
-    "ansible-dev-tools>=25.5.2,<26",
+    "ruff==0.14.6",
+    "ansible-lint==25.11.0 ; platform_system != 'Windows'",
+    "ansible-dev-tools==25.10.0",
 ]
 test = [
-    "pytest>=8.4.1,<9",
+    "pytest==9.0.1",
 ]
 
 [tool.uv]

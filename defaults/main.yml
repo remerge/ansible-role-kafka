@@ -22,5 +22,5 @@ kafka_process_roles:
   - broker
   - controller
 
-kafka_listener_address: "{{ ansible_default_ipv4.address }}"
+kafka_listener_address: "{{ ansible_facts['default_ipv4'].address }}"
 kafka_node_id: "{{ kafka_listener_address | ansible.utils.ipaddr('int') }}"

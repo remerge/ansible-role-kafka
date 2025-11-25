@@ -38,7 +38,7 @@ contribute to this repository.
     - role: remerge.kafka
       # /opt/kafka/bin/kafka-storage.sh random-uuid
       kafka_cluster_id: "eGFY_ioORw2-OvrLlqMC3Q"
-      kafka_listen_address: "{{ ansible_default_ipv4.address }}"
+      kafka_listen_address: "{{ ansible_facts['default_ipv4'].address }}"
       kafka_log_dirs: [/data/kafka/logs]
       kafka_env:
         # disable Kafka loggc handling to log file
