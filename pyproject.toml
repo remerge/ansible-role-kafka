@@ -11,7 +11,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ruff==0.14.6",
-    "ansible-lint==25.11.0 ; platform_system != 'Windows'",
+    "ansible-lint==25.11.1 ; platform_system != 'Windows'",
     "ansible-dev-tools==25.10.0",
 ]
 test = [
