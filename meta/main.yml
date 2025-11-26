@@ -5,4 +5,4 @@ galaxy_info:
   license: apache-2.0
   author: remerge
   company: remerge.io
-  min_ansible_version: "2.14"
+  min_ansible_version: "2.20"
