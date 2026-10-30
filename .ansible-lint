@@ -2,19 +2,14 @@
 profile: production
 
 exclude_paths:
-  - .ansible/collections
-  - .ansible/roles
+  - .ansible
   - .cache
   - .github
   - .terraform
   - .tox
   - meta/preferences.yml
-  - molecule/default/collections.yml
-  - molecule/default/converge.yml
-  - molecule/default/defaults.yml
-  - molecule/default/prepare.yml
-  - molecule/default/verify.yml
-  - requirements.yml
+  - molecule
+  - playbooks/all.yaml
 
 skip_list:
   - meta-no-info
