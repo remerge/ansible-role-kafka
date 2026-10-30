@@ -109,7 +109,7 @@ repos:
         # add the current directory as an inventory directory.
         # -r adds the repo's own rules and -R keeps the default ones; the profile
         # unloads every rule it does not list, so enable serial-reboot explicitly.
-        entry: env ANSIBLE_INVENTORY=/dev/null uv run ansible-lint -v --force-color --profile=production --strict
+        entry: env ANSIBLE_INVENTORY=/dev/null uv run ansible-lint -v --force-color --strict
         language_version: python3.14
         additional_dependencies:
           - "passlib"
