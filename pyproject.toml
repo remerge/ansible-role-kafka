@@ -10,12 +10,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "ruff==0.16.9",
-    "ansible-lint==26.9.0 ; platform_system != 'Windows'",
-    "ansible-dev-tools==26.9.0",
+    "ruff==0.17.3",
+    "ansible-lint==26.10.1 ; platform_system != 'Windows'",
+    "ansible-dev-tools==26.10.0",
 ]
 test = [
-    "pytest==9.1.1",
+    "pytest==9.2.0",
 ]
 
 [tool.uv]
