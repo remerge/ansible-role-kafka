@@ -83,17 +83,17 @@
   notify:
     - Restart Kafka
 
-- name: Copy Kafka log4j config
+- name: Copy Kafka log4j2 config
   ansible.builtin.template:
-    src: log4j.properties.j2
+    src: log4j2.yaml.j2
     dest: /opt/kafka/config/{{ item }}
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: "0644"
   loop:
-    - log4j.properties
-    - connect-log4j.properties
-    - tools-log4j.properties
+    - log4j2.yaml
+    - connect-log4j2.yaml
+    - tools-log4j2.yaml
   notify:
     - Restart Kafka
 
