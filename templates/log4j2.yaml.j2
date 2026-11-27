@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+Configuration:
+  Appenders:
+    Console:
+      name: console
+{% if item == 'tools-log4j2.yaml' %}
+      target: SYSTEM_ERR
+{% endif %}
+      PatternLayout:
+        pattern: "[%c] %m%n"
+  Loggers:
+    Root:
+{% if item == 'tools-log4j2.yaml' %}
+      level: WARN
+{% else %}
+      level: INFO
+{% endif %}
+      AppenderRef:
+        - ref: console
