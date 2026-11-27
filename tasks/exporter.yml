@@ -1,10 +1,19 @@
 ---
+# Downloads and unpacks only a version that is not in /opt yet. Check mode
+# downloads nothing, so it reports a missing version as a change instead of
+# unpacking an archive that is not there.
+- name: Check whether Kafka exporter is unpacked
+  ansible.builtin.stat:
+    path: /opt/{{ kafka_exporter_archive }}
+  register: kafka_exporter_unpacked
+
 - name: Download Kafka exporter
   ansible.builtin.get_url:
     url: "{{ kafka_exporter_url }}"
     dest: /tmp/{{ kafka_exporter_archive }}.tar.gz
     checksum: "{{ kafka_exporter_checksum }}"
     mode: "0644"
+  when: not kafka_exporter_unpacked.stat.exists
 
 - name: Unarchive Kafka exporter
   ansible.builtin.unarchive:
@@ -14,6 +23,19 @@
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     creates: /opt/{{ kafka_exporter_archive }}
+  notify:
+    - Restart Kafka exporter
+  when:
+    - not kafka_exporter_unpacked.stat.exists
+    - not ansible_check_mode
+
+- name: Report the Kafka exporter install in check mode
+  ansible.builtin.debug:
+    msg: Check mode would download and unpack /opt/{{ kafka_exporter_archive }}.
+  changed_when: true
+  when:
+    - not kafka_exporter_unpacked.stat.exists
+    - ansible_check_mode
   notify:
     - Restart Kafka exporter
 
@@ -26,6 +48,8 @@
     state: link
   notify:
     - Restart Kafka exporter
+  # The link target does not exist in check mode until the version is unpacked.
+  when: kafka_exporter_unpacked.stat.exists or not ansible_check_mode
 
 - name: Copy Kafka systemd service
   ansible.builtin.template:
