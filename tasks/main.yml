@@ -1,10 +1,19 @@
 ---
+# Downloads and unpacks only a version that is not in /opt yet. Check mode
+# downloads nothing, so it reports a missing version as a change instead of
+# unpacking an archive that is not there.
+- name: Check whether Kafka is unpacked
+  ansible.builtin.stat:
+    path: /opt/{{ kafka_archive }}
+  register: kafka_unpacked
+
 - name: Download Kafka
   ansible.builtin.get_url:
     url: "{{ kafka_url }}"
     dest: /tmp/{{ kafka_archive }}.tar.gz
     checksum: "{{ kafka_checksum }}"
     mode: "0644"
+  when: not kafka_unpacked.stat.exists
 
 - name: Create Kafka group
   ansible.builtin.group:
@@ -44,6 +53,19 @@
     creates: /opt/{{ kafka_archive }}
   notify:
     - Restart Kafka
+  when:
+    - not kafka_unpacked.stat.exists
+    - not ansible_check_mode
+
+- name: Report the Kafka install in check mode
+  ansible.builtin.debug:
+    msg: Check mode would download and unpack /opt/{{ kafka_archive }}.
+  changed_when: true
+  when:
+    - not kafka_unpacked.stat.exists
+    - ansible_check_mode
+  notify:
+    - Restart Kafka
 
 - name: Create Kafka symlink
   ansible.builtin.file:
@@ -54,6 +76,8 @@
     state: link
   notify:
     - Restart Kafka
+  # The link target does not exist in check mode until the version is unpacked.
+  when: kafka_unpacked.stat.exists or not ansible_check_mode
 
 - name: Set Kafka user home
   ansible.builtin.user:
