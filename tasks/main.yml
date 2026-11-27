@@ -83,17 +83,23 @@
   notify:
     - Restart Kafka
 
-- name: Copy Kafka log4j2 config
+# Kafka 4.0 moved from Log4j 1 (log4j.properties) to Log4j 2 (log4j2.yaml);
+# the start scripts load the file names of their own version.
+- name: Copy Kafka log4j config
   ansible.builtin.template:
-    src: log4j2.yaml.j2
+    src: "{{ 'log4j2.yaml.j2' if kafka_log4j2 else 'log4j.properties.j2' }}"
     dest: /opt/kafka/config/{{ item }}
     owner: "{{ kafka_user }}"
     group: "{{ kafka_group }}"
     mode: "0644"
-  loop:
-    - log4j2.yaml
-    - connect-log4j2.yaml
-    - tools-log4j2.yaml
+  vars:
+    kafka_log4j2: "{{ kafka_version is version('4.0.0', '>=') }}"
+  loop: >-
+    {{
+      ['log4j2.yaml', 'connect-log4j2.yaml', 'tools-log4j2.yaml']
+      if kafka_log4j2 else
+      ['log4j.properties', 'connect-log4j.properties', 'tools-log4j.properties']
+    }}
   notify:
     - Restart Kafka
 
